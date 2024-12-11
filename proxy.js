@@ -1,17 +1,3 @@
-<!--
-	mitm.html is the lite "man in the middle"
-
-	This is only meant to signal the opener's messageChannel to
-	the service worker - when that is done this mitm can be closed
-    but it's better to keep it alive since this also stops the sw
-    from restarting
-
-	The service worker is capable of intercepting all request and fork their
-	own "fake" response - wish we are going to craft
-	when the worker then receives a stream then the worker will tell the opener
-	to open up a link that will start the download
--->
-<script>
 // This will prevent the sw from restarting
 let keepAlive = () => {
   keepAlive = () => {}
@@ -108,7 +94,7 @@ function onMessage (event) {
 
   /** @since v2.0.0 */
   if (data.readableStream) {
-    console.warn("[StreamSaver] You should send the readableStream in the messageChannel, not throught mitm")
+    console.warn("[StreamSaver] You should send the readableStream in the messageChannel, not throught proxy")
   }
 
   /** @since v2.0.0 */
@@ -163,5 +149,3 @@ if (navigator.serviceWorker) {
 // even tough the service worker dose not have to do any kind of work and listen to any
 // messages... #305
 keepAlive()
-
-</script>
